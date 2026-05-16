@@ -45,18 +45,41 @@ jobs:
       
       - name: Fetch main branch
         run: git fetch origin main
-        
-      - id: change-dir
-        name: Get changed directories
-        run: |
-          CHANGED_DIRS=$(git diff --name-only origin/main...HEAD \
-           | grep '^terraform/' \
-           | grep -v '^\.github/' \
-           | cut -d'/' -f1,2 \
-           | sort -u)
 
-          echo "$CHANGED_DIRS"
-          echo "$CHANGED_DIRS" >> $GITHUB_OUTPUT
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            terraform/**
+          files_ignore: |
+            .github/**
+            terraform/.github/**
+
+      - name: Get changed terraform directories
+        id: change-dir
+        run: |
+          CHANGED_DIRS=$(echo "${{ steps.changed-files.outputs.all_changed_files }}" \
+            | tr ' ' '\n' \
+            | awk -F/ '{print $1"/"$2}' \
+            | sort -u \
+            | tr '\n' ' ')
+
+          echo "Changed directories: $CHANGED_DIRS"
+
+          echo "changed_dirs=$CHANGED_DIRS" >> $GITHUB_OUTPUT
+
+      # - id: change-dir
+      #   name: Get changed directories
+      #   run: |
+      #     CHANGED_DIRS=$(git diff --name-only origin/main...HEAD \
+      #      | grep '^terraform/' \
+      #      | grep -v '^\.github/' \
+      #      | cut -d'/' -f1,2 \
+      #      | sort -u)
+
+      #     echo "$CHANGED_DIRS"
+      #     echo "$CHANGED_DIRS" >> $GITHUB_OUTPUT
 
       # - name: Create GCS state bucket (if not exists)
       #   run: |
