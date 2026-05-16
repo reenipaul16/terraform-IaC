@@ -1,10 +1,10 @@
 module "projectservices" {
-  for_each = toset(var.services)
+for_each = toset(var.services)
 
   source = "../Modules/ProjectSetUp"
 
   project-id = var.project-id
   
 
-  services    = each.value
+  services    = each.key
 }
