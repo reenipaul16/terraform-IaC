@@ -54,7 +54,7 @@ jobs:
             terraform/**
           files_ignore: |
             .github/**
-            terraform/.github/**
+            ./terraform/Modules/**
 
       - name: Get changed terraform directories
         id: change-dir
@@ -88,11 +88,14 @@ jobs:
       - name: Terraform Init and Plan
         run: |
           FOLDER_LIST=$(echo "${{ steps.change-dir.outputs.changed_dirs }}" | tr ' ' '\n')
+          echo "${FOLDER_LIST}"
           for dir in $FOLDER_LIST; do
+            echo "${FOLDER_LIST}"
             echo "Processing $dir"
             cd $dir
             terraform init
             terraform plan -out=tfplan
+            cd -
           done  
   
   terraform-apply:

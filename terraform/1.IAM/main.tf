@@ -1,8 +1,4 @@
-resource "google_project_iam_binding" "project" {
-  project = var.project-id
-  role    = "roles/compute.admin"
-
-  members = [
-    "user:duttareshab1@gmail.com"
-  ]
+module IAM {
+    source="../Modules/IAM"
+    project-id = var.project-id
 }
