@@ -5,7 +5,7 @@ resource "google_project_service" "project" {
   "storage.googleapis.com", 
   "gkehub.googleapis.com", 
   "container.googleapis.com", 
-  "loadbalancer.googleapis.com",
+  # "loadbalancer.googleapis.com",
   "logging.googleapis.com",
   "monitoring.googleapis.com"
  ])
