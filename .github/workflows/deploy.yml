@@ -1,4 +1,4 @@
-name: Deploy to GKE
+name: Deploy
 
 on:
   push:
@@ -101,7 +101,7 @@ jobs:
     needs: [terraform-plan]
 
     #this job run when pull request is from 'main'
-    if: github.ref == 'refs/heads/main' && github.event.pull_request.merged == true  
+    if: github.event.pull_request.merged == true  
 
     steps:
       - name: Checkout
