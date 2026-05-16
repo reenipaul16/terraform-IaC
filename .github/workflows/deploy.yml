@@ -11,7 +11,9 @@ on:
     paths:
       - 'terraform/**'
   
-
+permissions:
+      contents: read
+      id_token: write
 env:
   PROJECT_ID: project-06cede75-fb8e-4bfb-984
   PROJECT_NUMBER: 489414658403
