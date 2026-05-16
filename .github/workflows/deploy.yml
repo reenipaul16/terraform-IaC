@@ -95,6 +95,7 @@ jobs:
             cd $dir
             terraform init
             terraform plan -out=tfplan
+            cd -
           done  
   
   terraform-apply:
