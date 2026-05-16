@@ -21,11 +21,11 @@ env:
 jobs:
   # ── 1. Terraform ──────────────────────────────────────────────
   terraform-plan:
-    name: Plan Infrastructure
+    name: Terraform_Plan
     runs-on: ubuntu-latest
     
     outputs:
-     Changed_dir: ${{ steps.changed_dirs.outputs.changed_dirs }}
+     Changed_dir: ${{ steps.change-dir.outputs.changed_dirs }}
     
     steps:
       - name: Checkout
@@ -96,7 +96,7 @@ jobs:
           done  
   
   terraform-apply:
-    name: Provision Infrastructure
+    name: Terraform_Apply
     runs-on: ubuntu-latest
     needs: [terraform-plan]
 
