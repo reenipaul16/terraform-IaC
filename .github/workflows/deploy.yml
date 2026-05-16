@@ -87,7 +87,8 @@ jobs:
 
       - name: Terraform Init and Plan
         run: |
-          for dir in ${{ steps.changed_dirs.outputs.changed_dirs }}; do
+          FOLDER_LIST=$(echo "${{ steps.changed_dirs.outputs.changed_dirs }}" | tr ' ' '\n')
+          for dir in $FOLDER_LIST; do
             echo "Processing $dir"
             cd $dir
             terraform init
