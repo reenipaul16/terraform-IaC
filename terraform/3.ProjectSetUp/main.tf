@@ -3,7 +3,10 @@ module "projectservices" {
 
   source = "../Modules/ProjectSetUp"
 
-  project-id = var.project-id
+  project= "project-06cede75-fb8e-4bfb-984"
+  
+
+
   
 
   services    = "compute.googleapis.com"

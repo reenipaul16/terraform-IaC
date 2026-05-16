@@ -1,4 +1,4 @@
-variable "project-id" {
+variable "project" {
   type=string
 }
 variable "services" {

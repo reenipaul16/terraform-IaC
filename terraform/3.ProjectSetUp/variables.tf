@@ -1,7 +1,7 @@
-variable "project-id" {
-  type=string
-}
+# variable "project"{
+#   type = string
+# }
 
-variable "services" {
-  type = string
-}
+# variable "services" {
+#   type = string
+# }
