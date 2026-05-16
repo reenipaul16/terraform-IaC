@@ -43,6 +43,9 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
       
+      - name: Fetch main branch
+        run: git fetch origin main
+        
       - id: change-dir
         name: Get changed directories
         run: |
