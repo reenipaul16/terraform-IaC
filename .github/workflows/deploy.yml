@@ -34,7 +34,7 @@ jobs:
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: projects/${env.PROJECT_NUMBER}/locations/global/workloadIdentityPools/Github/providers/terraform
+          workload_identity_provider: projects/${env.PROJECT_NUMBER}/locations/global/workloadIdentityPools/github/providers/terraform
           service_account: sa-terraform@project-06cede75-fb8e-4bfb-984.iam.gserviceaccount.com
 
       # - name: Setup gcloud
