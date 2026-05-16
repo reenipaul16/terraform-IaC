@@ -1,0 +1,103 @@
+name: Deploy to GKE
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'terraform/**'
+
+  pull_request:
+    branches: [main]
+    paths:
+      - 'terraform/**'
+  
+
+env:
+  PROJECT_ID: project-06cede75-fb8e-4bfb-984
+  PROJECT_NUMBER: 489414658403
+  
+jobs:
+  # ── 1. Terraform ──────────────────────────────────────────────
+  terraform-plan:
+    name: Plan Infrastructure
+    runs-on: ubuntu-latest
+    
+    outputs:
+     Changed_dir= ${{ steps.changed_dirs.outputs.changed_dirs }}
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/${env.PROJECT_NUMBER}/locations/global/workloadIdentityPools/Github/providers/terraform
+          service_account: sa-terraform@project-06cede75-fb8e-4bfb-984.iam.gserviceaccount.com
+
+      # - name: Setup gcloud
+      #   uses: google-github-actions/setup-gcloud@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+      
+      - id: change-dir
+        name: Get changed directories
+        run: |
+          CHANGED_DIRS=$(git diff --name-only origin/main...HEAD \
+           | grep '^terraform/' \
+           | grep -v '^\.github/' \
+           | cut -d'/' -f1,2 \
+           | sort -u)
+
+          echo "$CHANGED_DIRS" >> GITHUB_OUTPUT
+
+      # - name: Create GCS state bucket (if not exists)
+      #   run: |
+      #     gsutil mb -p $PROJECT_ID -l $REGION gs://${PROJECT_ID}-tfstate || true
+
+      - name: Terraform Init and Plan
+        run: |
+          for dir in ${{ steps.changed_dirs.outputs.changed_dirs }}; do
+            echo "Processing $dir"
+            cd $dir
+            terraform init
+            terraform plan -out=tfplan
+          done  
+  
+  terraform-apply:
+    name: Provision Infrastructure
+    runs-on: ubuntu-latest
+    needs: [terraform-plan]
+
+    #this job run when pull request is from 'main'
+    if: github.ref == 'refs/heads/main' && github.event.pull_request.merged == true  
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/${env.PROJECT_NUMBER}/locations/global/workloadIdentityPools/Github/providers/terraform
+          service_account: sa-terraform@project-06cede75-fb8e-4bfb-984.iam.gserviceaccount.com
+
+      # - name: Setup gcloud
+      #   uses: google-github-actions/setup-gcloud@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Apply
+        run: |
+          for dir in ${{ needs.terraform-plan.outputs.Changed_dir }}; do
+            echo "Processing $dir"
+            cd $dir
+            terraform init
+            terraform apply -auto-approve
+          done
+    
+
+
+    
