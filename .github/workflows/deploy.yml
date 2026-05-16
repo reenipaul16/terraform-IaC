@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     
     outputs:
-     Changed_dir= ${{ steps.changed_dirs.outputs.changed_dirs }}
+     Changed_dir: ${{ steps.changed_dirs.outputs.changed_dirs }}
     
     steps:
       - name: Checkout
