@@ -54,7 +54,7 @@ jobs:
             terraform/**
           files_ignore: |
             .github/**
-            ./terraform/Modules
+            ./terraform/Modules/**
 
       - name: Get changed terraform directories
         id: change-dir
