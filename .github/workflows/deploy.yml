@@ -101,7 +101,7 @@ jobs:
     needs: [terraform-plan]
 
     #this job run when pull request is from 'main'
-    if: ${{github.event.pull_request.merged == true }}
+    if: ${{ github.event_name == 'push' }}
 
     steps:
       - name: Checkout
