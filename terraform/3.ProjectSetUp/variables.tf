@@ -3,5 +3,5 @@ variable "project-id" {
 }
 
 variable "services" {
-  type = string
+  type = list(string)
 }
