@@ -8,7 +8,9 @@ resource "google_project_service" "project" {
   # "loadbalancer.googleapis.com",
   "logging.googleapis.com",
   "monitoring.googleapis.com",
-  "anthos.googleapis.com"
+  "anthos.googleapis.com",
+  "multiclusteringress.googleapis.com"
+
  ])
 
   project= "project-06cede75-fb8e-4bfb-984"
