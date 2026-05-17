@@ -47,7 +47,7 @@ resource "google_gke_hub_membership" "membership" {
   membership_id = "my-membership"
   endpoint {
     gke_cluster {
-      resource_link = "//container.googleapis.com/${google_container_cluster.cluster.id}"
+      resource_link = "//container.googleapis.com/projects/project-06cede75-fb8e-4bfb-984/locations/asia-south/clusters/my-cluster"
     }
   }
   depends_on = [ 

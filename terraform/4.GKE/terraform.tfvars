@@ -5,6 +5,6 @@ network_name  = "my-vpc"
 subnet_name = "my-subnet"
 
 
-cluster_name = "cluster-1"
+cluster_name = "my-cluster"
 node_count = 2
 machine_type = "e2-medium"
