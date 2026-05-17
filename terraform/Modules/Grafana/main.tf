@@ -5,7 +5,7 @@ resource "google_compute_instance" "vm" {
 
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-12"
+      image = "cos-cloud/cos-stable"
     }
   }
 
@@ -13,6 +13,34 @@ resource "google_compute_instance" "vm" {
     network    = var.network_name
     subnetwork = var.subnet_name
     # No external IP
+    network_ip = "172.24.10.50"
   }
 
+  metadata_startup_script = {
+    gce-container-declaration = <<EOT
+      spec:
+        containers:
+         - name: grafana
+           image: grafana/grafana:latest
+           ports:
+            - containerPort: 3000
+              hostPort: 3000
+     EOT
+  }
+}
+
+# Unmanaged Instance Group
+resource "google_compute_instance_group" "umg" {
+  name        = "umg-backend"
+
+  instances = [
+    google_compute_instance.vm.id
+  ]
+
+  named_port {
+    name = "http"
+    port = "3000"
+  }
+
+  zone = var.zone
 }
