@@ -51,7 +51,7 @@ resource "google_gke_hub_membership" "membership" {
     }
   }
   depends_on = [ 
-    google_container_node_pool
+    google_container_node_pool.primary_nodes
    ]
 }
 
