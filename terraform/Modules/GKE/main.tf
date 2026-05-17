@@ -6,6 +6,7 @@ resource "google_container_cluster" "primary" {
   subnetwork               = var.subnet_name
   remove_default_node_pool = true
   initial_node_count       = 1
+  deletion_protection = false
 
   ip_allocation_policy {
     cluster_secondary_range_name  = "pods"
@@ -32,12 +33,34 @@ resource "google_container_node_pool" "primary_nodes" {
     oauth_scopes = [
       "https://www.googleapis.com/auth/cloud-platform"
     ]
-    labels = { env = "demo" }
+    labels = { env = "test" }
     tags   = ["gke-node"]
   }
 
   management {
     auto_repair  = true
     auto_upgrade = true
+  }
+}
+
+resource "google_gke_hub_membership" "membership" {
+  membership_id = "my-membership"
+  endpoint {
+    gke_cluster {
+      resource_link = "//container.googleapis.com/${google_container_cluster.cluster.id}"
+    }
+  }
+  depends_on = [ 
+    google_container_node_pool
+   ]
+}
+
+resource "google_gke_hub_feature" "feature" {
+  name = "multiclusteringress"
+  location = "global"
+  spec {
+    multiclusteringress {
+      config_membership = google_gke_hub_membership.membership.id
+    }
   }
 }
