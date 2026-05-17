@@ -16,7 +16,7 @@ resource "google_compute_instance" "vm" {
     network_ip = "172.24.10.50"
   }
 
-  metadata_startup_script = {
+   metadata = {
     gce-container-declaration = <<EOT
       spec:
         containers:
