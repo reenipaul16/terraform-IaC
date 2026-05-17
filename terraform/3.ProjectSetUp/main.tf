@@ -9,7 +9,8 @@ resource "google_project_service" "project" {
   "logging.googleapis.com",
   "monitoring.googleapis.com",
   "anthos.googleapis.com",
-  "multiclusteringress.googleapis.com"
+  "multiclusteringress.googleapis.com",
+  "multiclusterservicediscovery.googleapis.com"
 
  ])
 
