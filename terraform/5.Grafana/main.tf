@@ -1,5 +1,5 @@
 module "vm" {
-  source = "../Modules/Grafana"
+  source = "../Modules/VM"
 
   project_id = var.project_id
   vm_name = var.vm_name
