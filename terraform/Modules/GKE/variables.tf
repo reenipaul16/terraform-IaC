@@ -22,3 +22,4 @@ variable "node_count"   {
 variable "machine_type" { 
     type = string
  }
+ 
