@@ -94,7 +94,7 @@ resource "google_compute_global_forwarding_rule" "grafana_forwarding_rule" {
   target                = google_compute_target_http_proxy.grafana_proxy.id
   port_range            = "80"
   load_balancing_scheme = "EXTERNAL"
-  ip_address            = google_compute_global_address.lb_ip.address
+  # ip_address            = google_compute_global_address.lb_ip.address
 }
 
 # output "grafana_url" {
