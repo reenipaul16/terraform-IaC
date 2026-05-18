@@ -6,3 +6,4 @@ resource "google_project_iam_binding" "project" {
     "user:duttareshab1@gmail.com"
   ]
 }
+
