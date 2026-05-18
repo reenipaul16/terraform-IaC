@@ -4,4 +4,3 @@ zone       = "asia-south1-a"
 machine_type = "e2-medium"
 network_name = "my-vpc"
 subnet_name = "my-subnet"
-
