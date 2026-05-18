@@ -7,11 +7,3 @@ resource "google_project_iam_binding" "project" {
   ]
 }
 
-resource "google_project_iam_binding" "project" {
-  project = var.project-id
-  role    = "roles/editor"
-
-  members = [
-    "user:duttareshab1@gmail.com"
-  ]
-}

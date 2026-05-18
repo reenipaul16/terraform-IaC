@@ -9,3 +9,4 @@ module "vm" {
   subnet_name = var.subnet_name
 
 }
+
