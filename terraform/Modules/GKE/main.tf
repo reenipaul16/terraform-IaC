@@ -19,6 +19,12 @@ resource "google_container_cluster" "primary" {
 
   logging_service    = "logging.googleapis.com/kubernetes"
   monitoring_service = "monitoring.googleapis.com/kubernetes"
+
+  # Enable Private Cluster
+  private_cluster_config {
+    enable_private_nodes    = true
+    enable_private_endpoint = false
+  }
 }
 
 resource "google_container_node_pool" "primary_nodes" {

@@ -21,7 +21,7 @@ resource "google_compute_instance" "grafana_vm" {
 spec:
   containers:
     - name: grafana
-      image: grafana/grafana:latest
+      image: asia-south1-docker.pkg.dev/project-06cede75-fb8e-4bfb-984/repo-grafana/grafana
       ports:
         - containerPort: 3000
           hostPort: 3000
