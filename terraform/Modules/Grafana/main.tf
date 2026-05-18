@@ -15,6 +15,9 @@ resource "google_compute_instance" "grafana_vm" {
     # No external IP
     network_ip = "172.24.10.50"
   }
+  service_account {
+    scopes = ["cloud-platform"]
+  }
 
    metadata = {
   gce-container-declaration = <<EOT
