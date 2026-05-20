@@ -28,15 +28,6 @@
 
 ---
 
-## SLI / SLO Definitions
-
-### SLIs (Service Level Indicators)
-
-| SLI | Definition | Measurement |
-|---|---|---|
-| **Availability** | % of HTTP requests returning 2xx | `sum(rate(http_requests_total{status=~"2.."}[5m])) / sum(rate(http_requests_total[5m]))` |
-| **Latency** | P95 response time in milliseconds | `histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))` |
-
 ### SLO (Service Level Objective)
 
 > **The App will be available 99.9% of the time over any 30-day rolling window,  
