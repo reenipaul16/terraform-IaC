@@ -1,7 +1,7 @@
 # Assignment
 
 
-**Project:** `project-06cede75-fb8e-4bfb-984`  
+**Project:** `project-XXXXX`  
 **Region:** `asia-south1` (Mumbai)  
 **Stack:** Terraform + GitHub Actions + GKE + Grafana OSS
 
@@ -12,8 +12,8 @@
 ```
 .
 ├── terraform/
-    ├──VPC
     ├──ProjectSetUp
+    ├──VPC
     ├──GKE
     ├──Grafana
 │   └── modules/
@@ -39,7 +39,7 @@
 
 ### SLO (Service Level Objective)
 
-> **The SRE Demo App will be available 99.9% of the time over any 30-day rolling window,  
+> **The App will be available 99.9% of the time over any 30-day rolling window,  
 > and 95% of requests will complete in under 500ms.**
 
 | SLO | Target | Error Budget (30 days) |
