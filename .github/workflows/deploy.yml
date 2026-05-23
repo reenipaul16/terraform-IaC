@@ -119,43 +119,7 @@ jobs:
             cd -
           done
           
-  # ── 2. Build and Push Docker image ──────────────────────────────────────────
-  build:
-    name: Build & Push Image
-    runs-on: ubuntu-latest
-    needs: [terraform-apply]
-
-    steps:
-      steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Authenticate to GCP
-        uses: google-github-actions/auth@v2
-        with:
-          workload_identity_provider: 'projects/489414658403/locations/global/workloadIdentityPools/github/providers/terraform'
-          service_account: 'sa-terraform@project-06cede75-fb8e-4bfb-984.iam.gserviceaccount.com'
-
-      - name: Configure Docker for Artifact Registry
-        run: gcloud auth configure-docker $REGION-docker.pkg.dev --quiet
-
-      - name: Create Artifact Registry repo (if not exists)
-        run: |
-          gcloud artifacts repositories create $REPO \
-            --repository-format=docker \
-            --location=$REGION \
-            --project=$PROJECT_ID || true
-
-      - name: Build & push image
-        working-directory: app
-        run: |
-          IMAGE_URI=$REGION-docker.pkg.dev/$PROJECT_ID/$REPO/$IMAGE:${{ github.sha }}
-          docker build -t $IMAGE_URI .
-          docker push $IMAGE_URI
-          # also tag as latest
-          docker tag $IMAGE_URI $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/$IMAGE:latest
-          docker push $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/$IMAGE:latest
-
+ 
 
 
 
