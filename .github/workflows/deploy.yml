@@ -17,9 +17,12 @@ permissions:
 env:
   PROJECT_ID: project-06cede75-fb8e-4bfb-984
   PROJECT_NUMBER: 489414658403
+  REGION: asia-south1
+  REPO: repo-app
+  IMAGE: app-image
   
 jobs:
-  # ── 1. Terraform ──────────────────────────────────────────────
+  # ── 1. Terraform Plan and Apply ──────────────────────────────────────────────
   terraform-plan:
     name: Terraform_Plan
     runs-on: ubuntu-latest
@@ -69,22 +72,6 @@ jobs:
 
           echo "changed_dirs=$CHANGED_DIRS" >> $GITHUB_OUTPUT
 
-      # - id: change-dir
-      #   name: Get changed directories
-      #   run: |
-      #     CHANGED_DIRS=$(git diff --name-only origin/main...HEAD \
-      #      | grep '^terraform/' \
-      #      | grep -v '^\.github/' \
-      #      | cut -d'/' -f1,2 \
-      #      | sort -u)
-
-      #     echo "$CHANGED_DIRS"
-      #     echo "$CHANGED_DIRS" >> $GITHUB_OUTPUT
-
-      # - name: Create GCS state bucket (if not exists)
-      #   run: |
-      #     gsutil mb -p $PROJECT_ID -l $REGION gs://${PROJECT_ID}-tfstate || true
-
       - name: Terraform Init and Plan
         run: |
           FOLDER_LIST=$(echo "${{ steps.change-dir.outputs.changed_dirs }}" | tr ' ' '\n')
@@ -131,7 +118,9 @@ jobs:
             terraform apply -auto-approve
             cd -
           done
-    
+          
+ 
+
 
 
     
