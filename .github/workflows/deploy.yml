@@ -18,8 +18,6 @@ env:
   PROJECT_ID: project-06cede75-fb8e-4bfb-984
   PROJECT_NUMBER: 489414658403
   REGION: asia-south1
-  REPO: repo-app
-  IMAGE: app-image
   
 jobs:
   # ── 1. Terraform Plan and Apply ──────────────────────────────────────────────
