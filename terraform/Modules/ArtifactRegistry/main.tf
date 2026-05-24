@@ -9,6 +9,6 @@ locals {
 }
 
 import {
-  to = google_artifact_registry_repository.repo_app
+  to = google_artifact_registry_repository.app_repository
   id = local.artifact_registry_import_id
 }
